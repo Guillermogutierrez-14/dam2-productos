@@ -1,6 +1,6 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -43,10 +43,15 @@ import { ProductService } from '../../services/product.service';
 export class ProductosPage implements OnInit {
   private productService = inject(ProductService);
 
+  readonly pageSize = 10;
+
   products = signal<Product[]>([]);
   total = signal(0);
   loading = signal(false);
   error = signal('');
+  currentPage = signal(1);
+
+  totalPages = computed(() => Math.max(1, Math.ceil(this.total() / this.pageSize)));
 
   ngOnInit(): void {
     this.loadProducts();
@@ -56,7 +61,9 @@ export class ProductosPage implements OnInit {
     this.loading.set(true);
     this.error.set('');
 
-    this.productService.getProducts().subscribe({
+    const skip = (this.currentPage() - 1) * this.pageSize;
+
+    this.productService.getProducts(this.pageSize, skip).subscribe({
       next: (response: ProductsResponse) => {
         this.products.set(response.products);
         this.total.set(response.total);
@@ -68,6 +75,20 @@ export class ProductosPage implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  nextPage(): void {
+    if (this.currentPage() < this.totalPages()) {
+      this.currentPage.update(page => page + 1);
+      this.loadProducts();
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage() > 1) {
+      this.currentPage.update(page => page - 1);
+      this.loadProducts();
+    }
   }
 
   // Stock valorado = unidades * precio, menos el descuento aplicable

@@ -15,6 +15,7 @@
   <ion-button routerLink="/inicio" fill="outline">
     Volver a Inicio
   </ion-button>
+
   @if (loading()) {
     <div class="loading">
       <ion-spinner></ion-spinner>
@@ -38,8 +39,11 @@
 
   @if (!loading() && !error()) {
     <p>
-      Productos cargados:
+      Mostrando
       <strong>{{ products().length }}</strong>
+      de
+      <strong>{{ total() }}</strong>
+      productos
     </p>
 
     <div class="table-container">
@@ -82,6 +86,27 @@
           }
         </tbody>
       </table>
+    </div>
+
+    <div class="pagination">
+      <ion-button
+        fill="outline"
+        [disabled]="currentPage() === 1"
+        (click)="previousPage()">
+        Anterior
+      </ion-button>
+
+      <span>
+        Página <strong>{{ currentPage() }}</strong>
+        de <strong>{{ totalPages() }}</strong>
+      </span>
+
+      <ion-button
+        fill="outline"
+        [disabled]="currentPage() === totalPages()"
+        (click)="nextPage()">
+        Siguiente
+      </ion-button>
     </div>
   }
 </ion-content>

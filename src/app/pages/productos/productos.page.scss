@@ -37,3 +37,10 @@ th {
   height: 50px;
   object-fit: contain;
 }
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
