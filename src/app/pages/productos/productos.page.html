@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h1>Listado de productos</h1>
+  <h1>Dashboard de productos</h1>
 
   <ion-button routerLink="/inicio" fill="outline">
     Volver a Inicio
@@ -38,54 +38,57 @@
   }
 
   @if (!loading() && !error()) {
-    <p>
-      Mostrando
-      <strong>{{ products().length }}</strong>
-      de
-      <strong>{{ total() }}</strong>
-      productos
-    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-label">Productos mostrados</span>
+        <span class="stat-value">{{ products().length }} de {{ total() }}</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Unidades en stock</span>
+        <span class="stat-value">{{ totalUnits() }}</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Valor del stock</span>
+        <span class="stat-value">{{ totalValue() | currency:'EUR' }}</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Valoración media</span>
+        <span class="stat-value">⭐ {{ averageRating() }}</span>
+      </div>
+    </div>
 
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Producto</th>
-            <th>Categoría</th>
-            <th>Marca</th>
-            <th>Precio</th>
-            <th>Descuento</th>
-            <th>Ancho</th>
-            <th>Alto</th>
-            <th>Valoración</th>
-            <th>Stock</th>
-            <th>Stock valorado</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (product of products(); track product.id) {
-            <tr>
-              <td>{{ product.id }}</td>
-              <td>
-                <div class="product">
-                  <img [src]="product.thumbnail" [alt]="product.title">
-                  <span>{{ product.title }}</span>
-                </div>
-              </td>
-              <td>{{ product.category }}</td>
-              <td>{{ product.brand || 'Sin marca' }}</td>
-              <td>{{ product.price | currency:'EUR' }}</td>
-              <td>{{ product.discountPercentage }} %</td>
-              <td>{{ product.dimensions.width }}</td>
-              <td>{{ product.dimensions.height }}</td>
-              <td>⭐ {{ product.rating }}</td>
-              <td>{{ product.stock }}</td>
-              <td>{{ stockValue(product) | currency:'EUR' }}</td>
-            </tr>
-          }
-        </tbody>
-      </table>
+    <div class="grid">
+      @for (product of products(); track product.id) {
+        <ion-card class="product-card">
+          <div class="image-box">
+            <img [src]="product.thumbnail" [alt]="product.title">
+            <span class="discount">-{{ product.discountPercentage }} %</span>
+          </div>
+
+          <ion-card-header>
+            <span class="category">{{ product.category }}</span>
+            <ion-card-title class="title">{{ product.title }}</ion-card-title>
+            <span class="brand">{{ product.brand || 'Sin marca' }}</span>
+          </ion-card-header>
+
+          <ion-card-content>
+            <div class="price-row">
+              <span class="price">{{ product.price | currency:'EUR' }}</span>
+              <span class="rating">⭐ {{ product.rating }}</span>
+            </div>
+
+            <ul class="details">
+              <li><span>Stock</span><strong>{{ product.stock }} uds.</strong></li>
+              <li><span>Ancho</span><strong>{{ product.dimensions.width }}</strong></li>
+              <li><span>Alto</span><strong>{{ product.dimensions.height }}</strong></li>
+              <li class="value">
+                <span>Stock valorado</span>
+                <strong>{{ stockValue(product) | currency:'EUR' }}</strong>
+              </li>
+            </ul>
+          </ion-card-content>
+        </ion-card>
+      }
     </div>
 
     <div class="pagination">

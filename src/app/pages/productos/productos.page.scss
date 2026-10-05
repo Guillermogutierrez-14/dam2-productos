@@ -3,44 +3,136 @@
   padding: 40px;
 }
 
-.table-container {
-  width: 100%;
-  overflow-x: auto;
+/* ---------- Indicadores ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
 }
 
-table {
-  width: 100%;
-  min-width: 1300px;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
-}
-
-th {
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  border-radius: 12px;
   background: var(--ion-color-primary);
-  color: white;
+  color: var(--ion-color-primary-contrast);
 }
 
-.product {
+.stat-label {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* ---------- Tarjetas ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 4px;
+}
+
+.product-card {
+  margin: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.image-box {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  height: 200px;
+  background: var(--ion-color-step-100, #e6e6e6);
 }
 
-.product img {
-  width: 50px;
-  height: 50px;
+.image-box img {
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
 }
+
+.discount {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--ion-color-danger);
+  color: var(--ion-color-danger-contrast);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.category {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ion-color-primary);
+}
+
+.title {
+  font-size: 1.1rem;
+}
+
+.brand {
+  font-size: 0.85rem;
+  color: var(--ion-color-medium);
+}
+
+.price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.details {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.details li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--ion-color-step-150, #d9d9d9);
+  font-size: 0.9rem;
+}
+
+.details li span {
+  color: var(--ion-color-medium);
+}
+
+.details li.value {
+  border-bottom: none;
+  padding-top: 10px;
+}
+
+.details li.value strong {
+  color: var(--ion-color-success);
+}
+
+/* ---------- Paginación ---------- */
 .pagination {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 16px;
-  margin-top: 20px;
+  margin: 20px 0 60px;
 }

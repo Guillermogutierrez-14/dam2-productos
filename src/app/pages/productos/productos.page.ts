@@ -53,6 +53,24 @@ export class ProductosPage implements OnInit {
 
   totalPages = computed(() => Math.max(1, Math.ceil(this.total() / this.pageSize)));
 
+  // Indicadores del dashboard (sobre los productos de la página actual)
+  totalUnits = computed(() =>
+    this.products().reduce((sum, p) => sum + p.stock, 0)
+  );
+
+  totalValue = computed(() =>
+    this.products().reduce((sum, p) => sum + this.stockValue(p), 0)
+  );
+
+  averageRating = computed(() => {
+    const list = this.products();
+    if (list.length === 0) {
+      return 0;
+    }
+    const avg = list.reduce((sum, p) => sum + p.rating, 0) / list.length;
+    return Math.round(avg * 100) / 100;
+  });
+
   ngOnInit(): void {
     this.loadProducts();
   }
