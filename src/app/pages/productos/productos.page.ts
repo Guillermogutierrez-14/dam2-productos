@@ -1,4 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { CurrencyPipe } from '@angular/common';
 import {
   IonHeader,
@@ -24,6 +25,7 @@ import { ProductService } from '../../services/product.service';
   styleUrls: ['./productos.page.scss'],
   imports: [
     CurrencyPipe,
+    RouterLink,
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -66,5 +68,11 @@ export class ProductosPage implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  // Stock valorado = unidades * precio, menos el descuento aplicable
+  stockValue(product: Product): number {
+    const total = product.stock * product.price;
+    return total - (total * product.discountPercentage / 100);
   }
 }

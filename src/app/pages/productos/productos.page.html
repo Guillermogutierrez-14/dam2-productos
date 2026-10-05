@@ -12,6 +12,9 @@
 <ion-content class="ion-padding">
   <h1>Listado de productos</h1>
 
+  <ion-button routerLink="/inicio" fill="outline">
+    Volver a Inicio
+  </ion-button>
   @if (loading()) {
     <div class="loading">
       <ion-spinner></ion-spinner>
@@ -48,8 +51,12 @@
             <th>Categoría</th>
             <th>Marca</th>
             <th>Precio</th>
+            <th>Descuento</th>
+            <th>Ancho</th>
+            <th>Alto</th>
             <th>Valoración</th>
             <th>Stock</th>
+            <th>Stock valorado</th>
           </tr>
         </thead>
         <tbody>
@@ -65,8 +72,12 @@
               <td>{{ product.category }}</td>
               <td>{{ product.brand || 'Sin marca' }}</td>
               <td>{{ product.price | currency:'EUR' }}</td>
+              <td>{{ product.discountPercentage }} %</td>
+              <td>{{ product.dimensions.width }}</td>
+              <td>{{ product.dimensions.height }}</td>
               <td>⭐ {{ product.rating }}</td>
               <td>{{ product.stock }}</td>
+              <td>{{ stockValue(product) | currency:'EUR' }}</td>
             </tr>
           }
         </tbody>

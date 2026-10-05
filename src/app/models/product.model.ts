@@ -1,3 +1,9 @@
+export interface Dimensions {
+  width: number;
+  height: number;
+  depth: number;
+}
+
 export interface Product {
   id: number;
   title: string;
@@ -9,6 +15,7 @@ export interface Product {
   stock: number;
   brand: string;
   thumbnail: string;
+  dimensions: Dimensions;
 }
 
 export interface ProductsResponse {
